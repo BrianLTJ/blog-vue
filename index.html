@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/node_modules/vue/dist/vue.js"></script>
+    <script src="/node_modules/vue-router/dist/vue-router.js"></script>
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <title>blog</title>
+</head>
+<body>
+<div>Header</div>
+<div id="content">
+
+    <div v-for="post in post_list">
+        {{ post.title }}
+    </div>
+
+
+</div>
+<div>Footer</div>
+<script src="/static/js/main.js"></script>
+</body>
+</html>
