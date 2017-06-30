@@ -1,0 +1,15 @@
+{
+  "name": "blog-vue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tingjun Li",
+  "license": "ISC",
+  "dependencies": {
+    "marked": "^0.3.6",
+    "vue": "^2.3.4"
+  }
+}
