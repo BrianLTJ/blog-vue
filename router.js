@@ -4,8 +4,9 @@ import Error from './components/error.vue'
 
 const router = new VueRouter({
     routes: [
-        { path: '/post/:url', component: Post},
+        { path: '/post/:url',name:'postDetail', component: Post},
         { path: '', component: Index},
+        { path: '/error',name:'error', component: Error},
         { path: '*', component: Error}
     ]
 });
@@ -13,24 +14,6 @@ const router = new VueRouter({
 const blogapp = new Vue({
     el: "#app",
     router: router,
-    methods: {
-        fetch_list: function(){
-            $.ajax({
-                method: "get",
-                url: '/data/postlist',
-                contentType: "text/plain",
-                success: function (data,status) {
-                    blogapp.$data['post_list']=JSON.parse(data);
-                }
-            });
-        }
 
-
-    },
-    mounted: function () {
-        $(document).ready(function () {
-            blogapp.fetch_list();
-        });
-    }
 });
 

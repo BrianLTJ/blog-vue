@@ -42,6 +42,7 @@ export default {
                 error: function (data, status) {
                     postapp.post=null;
                     postapp.error=status;
+//                    router.push({name:"error"});
                     console.log(status);
                 }
             })
