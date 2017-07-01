@@ -1,27 +1,34 @@
+import Index from './components/index.vue'
 import Post from './components/post.vue'
-
-const index={
-    template: "<h2>Blog index</h2>"
-};
-
-// const Post = {
-//     template: "<div><p>Blog detail</p><div>{{ $route.params.url }}</div></div>"
-// };
-
-const Error = {
-    template: "<div>ERROR: 404</div>"
-}
+import Error from './components/error.vue'
 
 const router = new VueRouter({
     routes: [
         { path: '/post/:url', component: Post},
-        { path: '', component:index},
-        { path: '*', component:Error}
+        { path: '', component: Index},
+        { path: '*', component: Error}
     ]
 });
 
-const app = new Vue({
+const blogapp = new Vue({
     el: "#app",
-    router: router
+    router: router,
+    methods: {
+        fetch_list: function(){
+            $.ajax({
+                method: "get",
+                url: '/data/postlist',
+                contentType: "text/plain",
+                success: function (data,status) {
+                    blogapp.$data['post_list']=JSON.parse(data);
+                }
+            });
+        }
+    },
+    mounted: function () {
+        $(document).ready(function () {
+            blogapp.fetch_list();
+        });
+    }
 });
 
