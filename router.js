@@ -24,6 +24,8 @@ const blogapp = new Vue({
                 }
             });
         }
+
+
     },
     mounted: function () {
         $(document).ready(function () {
