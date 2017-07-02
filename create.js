@@ -1,6 +1,7 @@
 const readline = require('readline');
 const path = require('path');
 const fs = require('fs');
+const datetime = require('node-datetime');
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -13,10 +14,24 @@ let url = "";
 let write = false;
 let filePath = "";
 let filetext = "";
+
+let default_cate = "";
+let default_tag = "";
+let timezone_offset = "";
+
+try{
+    let config = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+    default_cate = config['default_category'];
+    default_tag = config["default_tag"];
+    timezone_offset = config["timezone_offset"];
+}
+catch (exception) {
+
+}
 function writefile() {
     if(write){
         console.log("Creating file...");
-        filetext = "---\n"+filetext+"---\n\n# "+title+"\n\nPlease write here.\n\n";
+        filetext = "---\n"+filetext+"---\n\nPlease write here.\n\n";
         fs.writeFile(filePath,filetext,(err) => {
             if(err) throw err;
             console.log("Created: "+filePath);
@@ -33,18 +48,19 @@ rl.question('Title: ', (answer) => {
         author = answer;
 
         rl.question('Url: ', (answer) => {
-            url = answer.replace(" ","-").toLowerCase();
+            let spacereg = new RegExp(" ",'g');
+            url = answer.replace(spacereg,"-").toLowerCase();
 
             filePath = path.join(__dirname,"posts","publish",url+".md");
-            date = new Date;
+            let nowtime = datetime.create()
             filetext = "title: "+title+"\n"+
                 "author: "+author+"\n"+
                     "url: "+url+"\n"+
-                "time: "+date.toDateString()+"\n"+
+                "time: "+nowtime.format('Y-m-d H:M:S ')+timezone_offset+"\n"+
                 "category: \n"+
-                "    - \n"+
+                "    - "+default_cate+"\n"+
                 "tags: \n"+
-                "    - \n";
+                "    - "+default_tag+"\n";
 
             console.log("\n\n"+filetext+"\n\n");
 
