@@ -1,16 +1,36 @@
 <template>
-    <div>
-        <h1>My Blog</h1>
-        <div class="blog-list">
-            <div v-for="item in post_list">
-                <p>{{ item.title }}</p>
-                <router-link :to="{name:'postDetail',params: {url: item.url }}">查看全文</router-link>
+    <div class="index">
+        <div class="row">
+            <div class="col s12 m9">
+                <div class="blog-list">
+                    <div is="PostListItem"
+                         v-for="item in post_list"
+                         :title="item.title"
+                         :url="item.url"
+                         :tags = "item.tags"
+                         :category="item.category"
+                         :time="item.time" >
+                    </div>
+                </div>
+                <div class="blog-more">
+                    <span class="blog-more-button">MORE</span>
+                </div>
+            </div>
+
+            <div class="col s12 m3">
+                <div>
+                    cates
+                </div>
+                <div>
+                    tags
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import PostListItem from './post_list_item.vue'
     export default {
         data () {
             return {
@@ -19,20 +39,28 @@
             }
         },
         created () {
+            this.indexInit();
             this.fetch_list();
         },
         methods: {
+            indexInit () {
+                $("#header").addClass('header-max');
+                $("#header").removeClass('header-medium header-small');
+            },
             fetch_list () {
                 var indexapp = this;
                 $.ajax({
                     method: "get",
-                    url: '/data/postlist',
+                    url: '/data/list/postlist',
                     contentType: "text/plain",
                     success: function (data,status) {
                         indexapp.post_list=JSON.parse(data);
                     }
                 });
             }
+        },
+        components: {
+            PostListItem
         },
         watch: {
             '$route': 'fetch_list'
