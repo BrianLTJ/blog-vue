@@ -52,13 +52,15 @@ function getMeta(mdString) {
 function addMeta(meta){
     let i=0;
     let meta_timestamp = new Date(Date.parse(meta['time'])).getTime();
+    let last = true;
     for(i=0;i<metalist.length;i++){
         let currentTime = new Date(Date.parse(metalist[i]['time'])).getTime();
         if(currentTime<meta_timestamp){
+            last = false;
             break;
         }
     }
-    if(i == metalist.length) i++;
+    if(last) i=metalist.length;
     meta['time']=dt.create(meta['time']).format('Y-m-d H:M:S');
     metalist.splice(i,0,meta);
 }
@@ -80,26 +82,54 @@ function addCate(cate,meta) {
                     postinserted = true;
                     break;
                 }
-                if(currentTime<meta_timestamp){
+                if(currentTime<meta_timestamp&&insertloc==-1){
                     insertloc = j;
                 }
             }
             if(!postinserted){
                 if(insertloc==-1) insertloc=catelist[i]["posts"].length;
+                console.log('cate '+meta['url']+' insert at'+insertloc);
                 catelist[i]["posts"].splice(insertloc,0,meta);
             }
         }
     }
     if(!found){
-        catelist.push({"name":cate,"posts":[{"url":posturl,"time":posttime}]});
+        catelist.push({"name":cate,"posts":[meta]});
     }
 }
 
-function addTag(tag) {
-    if(!taglist.has(tag)){
-        taglist.push(tag);
+function addTag(tag,meta) {
+    let posturl = meta['url'];
+    let posttime = meta['time'];
+    let meta_timestamp = new Date(Date.parse(meta['time'])).getTime();
+    let found = false;
+    for(let i=0;i<taglist.length;i++){
+        if(tag==taglist[i]["name"]){
+            found = true;
+            let insertloc = -1;
+            let postinserted = false;
+            let j =0;
+            for(j=0;j<taglist[i]["posts"].length;j++){
+                let currentTime = new Date(Date.parse(taglist[i]["posts"][j]['time'])).getTime();
+                if(meta['url']==taglist[i]["posts"][j]['url']){
+                    postinserted = true;
+                    break;
+                }
+                if(currentTime<meta_timestamp&&insertloc==-1){
+                    insertloc = j;
+                }
+            }
+            if(!postinserted){
+                if(insertloc==-1) insertloc=taglist[i]["posts"].length;
+                taglist[i]["posts"].splice(insertloc,0,meta);
+            }
+        }
+    }
+    if(!found){
+        taglist.push({"name":tag,"posts":[meta]});
     }
 }
+
 
 function saveMD2HTML (filePath,mdString) {
     fs.writeFile(filePath, marked(mdString),{encoding:"utf8"},(err)=>{
@@ -122,6 +152,13 @@ function savelist() {
         (err) => {
             if(err) throw err;
             console.log('Category list created.')
+        });
+    fs.writeFile(path.join(distpath,'list','taglist'),
+        JSON.stringify(taglist),
+        {encoding: 'utf8'},
+        (err) => {
+            if(err) throw err;
+            console.log('Tag list created.')
         });
     fs.writeFile(path.join(distpath,'list','postlist'),
         JSON.stringify(metalist),
@@ -166,13 +203,15 @@ function Generate() {
                 meta['category'].forEach(catename => {
                     addCate(catename, meta);
                 });
+                meta['tags'].forEach(tagname => {
+                    addTag(tagname, meta);
+                });
                 let marktext = markfile.replace(metareg,"");
                 saveMD2HTML(path.join(distpath,"posts",meta['url']),marktext);
                 saveMETA(path.join(distpath,"posts",meta['url']+".meta"),meta);
             }
 
     });
-    console.log(catelist);
     savelist();
 }
 
