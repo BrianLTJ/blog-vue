@@ -9,6 +9,7 @@
   "author": "Tingjun Li",
   "license": "ISC",
   "dependencies": {
+    "fs-extra": "^3.0.1",
     "jquery": "^3.2.1",
     "marked": "^0.3.6",
     "material-design-icons": "^3.0.1",

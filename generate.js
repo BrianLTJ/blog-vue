@@ -4,6 +4,7 @@ let marked = require('marked');
 let yaml = require('yamljs');
 var rimraf = require('rimraf');
 let dt = require('node-datetime');
+const fse = require('fs-extra');
 
 const metareg = new RegExp('^---\s*$([^]*)^---\s*$','m');
 
@@ -13,6 +14,7 @@ let distpath = path.join(__dirname,"data");
 let filelist = [];
 let metalist = [];
 
+let mode = 'prod';
 
 /*
 * catelist
@@ -221,17 +223,32 @@ function savelist() {
         });
 }
 
-// Clear data folder
-rimraf(path.join(distpath,'posts'),(err)=>{
-   if(err) throw err;
-   console.log("Dir posts cleaned.")
-    fs.mkdir(path.join(distpath,'posts'), (err)=>{
-        if(err) throw err;
-        console.log("Dir posts created.")
-        ReadFileList();
-    });
-});
+// prepare dest folder
+function prepareDir(){
+    if(mode=='prod'){
+        fse.ensureDirSync(path.join(__dirname,"public"));
+        // fse.emptyDirSync(path.join(__dirname,"public"));
+        fse.removeSync(path.join(__dirname,"public","index.html"));
+        fse.removeSync(path.join(__dirname,"public","404.html"));
+        fse.removeSync(path.join(__dirname,"public","dist"));
+        fse.removeSync(path.join(__dirname,"public","static"));
+        fse.removeSync(path.join(__dirname,"public","data"));
 
+        distpath = path.join(__dirname,"public","data");
+        fse.ensureDirSync(distpath);
+        fse.copySync(path.join(__dirname,"index.html"),path.join(__dirname,"public","index.html"));
+        fse.copySync(path.join(__dirname,"index.html"),path.join(__dirname,"public","404.html"));
+        fse.copySync(path.join(__dirname,"dist"),path.join(__dirname,"public","dist"));
+        fse.copySync(path.join(__dirname,"static"),path.join(__dirname,"public","static"));
+    }
+    fse.ensureDirSync(distpath);
+    fse.ensureDirSync(path.join(distpath,"posts"));
+    fse.ensureDirSync(path.join(distpath,"list","category"));
+    fse.ensureDirSync(path.join(distpath,"list","tag"));
+
+    console.log("Static files prepared.");
+    ReadFileList();
+}
 
 function ReadFileList() {
     fs.readdir(mdpath, (err, files) => {
@@ -267,6 +284,12 @@ function Generate() {
     savelist();
 }
 
+
+/*
+* Entrance
+* */
+
+prepareDir();
 
 
 
