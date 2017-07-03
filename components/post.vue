@@ -1,12 +1,15 @@
 <template>
-    <div>
+    <div class="view-post">
         <div class="post-info">
-            <h1 id="post-title">{{ meta.title }}</h1>
-            <div>url: {{ $route.params.url }}</div>
-            <div>
-                <div v-html="post"></div>
+            <div class="post-cate-tag">
+                <span v-for="cate in meta.category">@{{ cate }}</span>
+                <span v-for="tag in meta.tags">#{{ tag }}</span>
             </div>
         </div>
+        <h1 id="post-title">{{ meta.title }}</h1>
+        <div class=""></div>
+        <div class="post-text" v-html="post"></div>
+
     </div>
 </template>
 
@@ -28,7 +31,6 @@ export default {
         }
     },
     created () {
-
         this.postInit();
     },
     watch: {
@@ -36,6 +38,7 @@ export default {
     },
     methods: {
         postInit () {
+            setpageloading();
             $(document).ready(function () {
                 $("#header").addClass('header-medium');
                 $("#header").removeClass('header-max header-small');
@@ -45,19 +48,22 @@ export default {
         },
         fetchData () {
             this.post = null;
-            this.loading = true;
             var postapp = this;
+            setpageloading();
             $.ajax({
                 method: "get",
                 url: '/data/posts/'+postapp.$route.params.url+'.meta',
                 contentType: "text/plain",
                 success: function (data, status) {
                     postapp.meta = JSON.parse(data);
+                    setpageloaded();
+
                 },
                 error: function (data, status) {
                     postapp.meta=null;
                     postapp.error=status;
                     console.log(status);
+                    setpageloaded();
                 }
             });
             $.ajax({
@@ -66,12 +72,11 @@ export default {
                 contentType: "text/plain",
                 success: function (data, status) {
                     postapp.post = data;
-                    postapp.loading = false;
+                    setpageloaded();
                 },
                 error: function (data, status) {
                     postapp.post=null;
-                    postapp.error=status;
-//                    router.push({name:"error"});
+                    setpageloaded();
                     console.log(status);
                 }
             });

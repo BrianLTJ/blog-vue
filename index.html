@@ -8,30 +8,42 @@
     <script src="/node_modules/vue/dist/vue.js"></script>
     <script src="/node_modules/vue-router/dist/vue-router.js"></script>
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="/node_modules/materialize-css/dist/css/materialize.min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script src="/node_modules/materialize-css/dist/js/materialize.min.js"></script>
     <title>blog</title>
-    <style>
-        .router-page{
-
-        }
-        .hide {
-            display: none;
-        }
-    </style>
 </head>
 <body>
-<div>Header</div>
-<div>
-    <a href="#/">Home</a>
-    <a href="#/post">Post</a>
-</div>
-<div id="app">
-    <router-link to="/">Home</router-link>
-    <router-link to="/post">Post</router-link>
+<div id="loading-bar"><span id="loading-bar-item"></span></div>
+<div class="wrapper" id="app">
+    <header>
+        <div class="row nav-container">
+            <div class="logo col s12 m4">LTJ's BLOG</div>
+            <div class="nav col s12 m8">
+                <router-link class="nav-link" to="/">HOME<span class="underline"></span></router-link>
+                <router-link class="nav-link" to="/post">POST<span class="underline"></span></router-link>
+                <router-link class="nav-link" to="/about">ABOUT<span class="underline"></span></router-link>
+            </div>
+        </div>
 
-    <router-view></router-view>
+    </header>
+    <div id="header" class="header header-max">
+        <div class="page-title">
 
+        </div>
+    </div>
+    <div class="container">
+        <transition name="fade">
+            <router-view></router-view>
+        </transition>
+    </div>
+
+    <footer>
+        <p>GITHUB MAIL</p>
+        <p>Code by LiTingjun</p>
+    </footer>
 </div>
-<div>Footer</div>
+
 <!--<script src="/static/js/main.js"></script>-->
 <script src="/dist/build.js"></script>
 </body>

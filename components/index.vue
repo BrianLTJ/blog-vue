@@ -44,6 +44,7 @@
         },
         methods: {
             indexInit () {
+                setpageloading();
                 $("#header").addClass('header-max');
                 $("#header").removeClass('header-medium header-small');
             },
@@ -55,6 +56,7 @@
                     contentType: "text/plain",
                     success: function (data,status) {
                         indexapp.post_list=JSON.parse(data);
+                        setpageloaded();
                     }
                 });
             }

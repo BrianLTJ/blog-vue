@@ -1,3 +1,6 @@
 <template>
-    About ME
+    <div class="view-about">
+        About ME
+    </div>
+
 </template>
