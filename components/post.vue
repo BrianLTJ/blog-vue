@@ -2,8 +2,8 @@
     <div class="view-post">
         <div class="post-info">
             <div class="post-cate-tag">
-                <span v-for="cate in meta.category">@{{ cate }}</span>
-                <span v-for="tag in meta.tags">#{{ tag }}</span>
+                <router-link :to="{name:'categoryPostList',params:{mode:'name',key:cate}}" class="post-cate-tag" v-for="cate in meta.category">@{{ cate }}</router-link>
+                <router-link :to="{name:'tagPostList',params: {mode:'name',key:tag}}" class="post-cate-tag" v-for="tag in meta.tags">#{{ tag }}</router-link>
             </div>
         </div>
         <h1 id="post-title">{{ meta.title }}</h1>

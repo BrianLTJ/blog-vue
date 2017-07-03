@@ -146,20 +146,72 @@ function saveMETA (filePath,meta) {
 }
 
 function savelist() {
+    /*
+     * Category
+     */
+    /* Category item list */
+    let cate_item_list = []
+    catelist.forEach((cate,index) => {
+        cate_item_list.push({"name":cate["name"],"id":(index+1).toString()});
+        let tosave = []; tosave.push({"name":cate["name"],"id":(index+1).toString()});
+        tosave.push(catelist[index]['posts']);
+        fs.writeFile(path.join(distpath,'list','category',(index+1).toString()),
+            JSON.stringify(tosave),
+            {encoding: 'utf8'},
+            (err) => {
+                if(err) throw err;
+                console.log('Category post list created.')
+            });
+        fs.writeFile(path.join(distpath,'list','category',cate["name"]),
+            JSON.stringify(tosave),
+            {encoding: 'utf8'},
+            (err) => {
+                if(err) throw err;
+                console.log('Category list created.')
+            });
+    });
+
     fs.writeFile(path.join(distpath,'list','catelist'),
-        JSON.stringify(catelist),
+        JSON.stringify(cate_item_list),
         {encoding: 'utf8'},
         (err) => {
             if(err) throw err;
             console.log('Category list created.')
         });
+
+    /*
+     * Tag
+     */
+    /* Tag item list */
+    let tag_item_list = [];
+    taglist.forEach((tag,index) => {
+        tag_item_list.push({"name":tag["name"],"id":(index+1).toString()});
+        let tosave = []; tosave.push({"name":tag["name"],"id":(index+1).toString()});
+        tosave.push(taglist[index]['posts']);
+        fs.writeFile(path.join(distpath,'list','tag',(index+1).toString()),
+            JSON.stringify(tosave),
+            {encoding: 'utf8'},
+            (err) => {
+                if(err) throw err;
+                console.log('Tag list created.')
+            });
+        fs.writeFile(path.join(distpath,'list','tag',tag["name"]),
+            JSON.stringify(tosave),
+            {encoding: 'utf8'},
+            (err) => {
+                if(err) throw err;
+                console.log('Tag list created.')
+            });
+    });
+
     fs.writeFile(path.join(distpath,'list','taglist'),
-        JSON.stringify(taglist),
+        JSON.stringify(tag_item_list),
         {encoding: 'utf8'},
         (err) => {
             if(err) throw err;
-            console.log('Tag list created.')
+            console.log('Tag item list created.')
         });
+
     fs.writeFile(path.join(distpath,'list','postlist'),
         JSON.stringify(metalist),
         {encoding: 'utf8'},

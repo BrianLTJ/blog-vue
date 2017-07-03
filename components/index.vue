@@ -19,10 +19,17 @@
 
             <div class="col s12 m3">
                 <div>
-                    cates
+                    <div>CATEGORY</div>
+                    <div>
+
+                        <router-link :to="{name:'categoryPostList',params:{mode:'name',key:cate.name}}" class="post-cate-tag" v-for="cate in cate_list">@{{ cate.name }}</router-link>
+                    </div>
                 </div>
                 <div>
-                    tags
+                    <div>TAG</div>
+                    <div>
+                        <router-link :to="{name:'tagPostList',params: {mode:'name',key:tag.name}}" class="post-cate-tag" v-for="tag in tag_list">#{{ tag.name }}</router-link>
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,7 +42,9 @@
         data () {
             return {
                 loading : false,
-                post_list: []
+                post_list: [],
+                cate_list:[],
+                tag_list: []
             }
         },
         created () {
@@ -50,13 +59,35 @@
             },
             fetch_list () {
                 var indexapp = this;
+                var loaded = 0;
                 $.ajax({
                     method: "get",
                     url: '/data/list/postlist',
                     contentType: "text/plain",
                     success: function (data,status) {
                         indexapp.post_list=JSON.parse(data);
-                        setpageloaded();
+                        loaded++;
+                        if(loaded>=3) setpageloaded();
+                    }
+                });
+                $.ajax({
+                    method: "get",
+                    url: '/data/list/catelist',
+                    contentType: "text/plain",
+                    success: function (data,status) {
+                        indexapp.cate_list=JSON.parse(data);
+                        loaded++;
+                        if(loaded>=3) setpageloaded();
+                    }
+                });
+                $.ajax({
+                    method: "get",
+                    url: '/data/list/taglist',
+                    contentType: "text/plain",
+                    success: function (data,status) {
+                        indexapp.tag_list=JSON.parse(data);
+                        loaded++;
+                        if(loaded>=3) setpageloaded();
                     }
                 });
             }

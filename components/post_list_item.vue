@@ -6,8 +6,8 @@
         </router-link>
         <div class="post-info">
             <span class="time">{{ time }}</span>
-            <span class="cate-item" v-for="cate in category">@{{ cate }}</span>
-            <span class="tag-item" v-for="tag in tags">#{{ tag }}</span>
+            <router-link :to="{name:'categoryPostList',params:{mode:'name',key:cate}}" class="cate-item" v-for="cate in category">@{{ cate }}</router-link>
+            <router-link :to="{name:'tagPostList',params: {mode:'name',key:tag}}"  class="tag-item" v-for="tag in tags">#{{ tag }}</router-link>
         </div>
 
     </div>
