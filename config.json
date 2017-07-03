@@ -1,0 +1,7 @@
+{
+  "blog_url": "/post/:url",
+
+  "timezone_offset" : "+0800",
+  "default_category": "默认",
+  "default_tag": "文章"
+}
