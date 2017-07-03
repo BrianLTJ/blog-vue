@@ -230,16 +230,14 @@ function prepareDir(){
         // fse.emptyDirSync(path.join(__dirname,"public"));
         fse.removeSync(path.join(__dirname,"public","index.html"));
         fse.removeSync(path.join(__dirname,"public","404.html"));
-        fse.removeSync(path.join(__dirname,"public","dist"));
         fse.removeSync(path.join(__dirname,"public","static"));
         fse.removeSync(path.join(__dirname,"public","data"));
 
         distpath = path.join(__dirname,"public","data");
         fse.ensureDirSync(distpath);
-        fse.copySync(path.join(__dirname,"index.html"),path.join(__dirname,"public","index.html"));
-        fse.copySync(path.join(__dirname,"index.html"),path.join(__dirname,"public","404.html"));
-        fse.copySync(path.join(__dirname,"dist"),path.join(__dirname,"public","dist"));
-        fse.copySync(path.join(__dirname,"static"),path.join(__dirname,"public","static"));
+        fse.copySync(path.join(__dirname,"dist","index.html"),path.join(__dirname,"public","index.html"));
+        fse.copySync(path.join(__dirname,"dist","index.html"),path.join(__dirname,"public","404.html"));
+        fse.copySync(path.join(__dirname,"dist","static"),path.join(__dirname,"public","static"));
     }
     fse.ensureDirSync(distpath);
     fse.ensureDirSync(path.join(distpath,"posts"));

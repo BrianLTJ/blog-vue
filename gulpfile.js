@@ -8,6 +8,13 @@ var uglify = require('gulp-uglify');
 var pump = require('pump');
 var htmlmin = require('gulp-htmlmin');
 var inject = require('gulp-inject');
+var path = require('path')
+
+var fse = require('fs-extra');
+
+// Set this prefix if you want to deploy resources to CDN or other server
+// Please do be careful of the end of /
+var url_prefix = "./"
 
 const liblist = [
     "./node_modules/vue/dist/vue.js",
@@ -33,7 +40,7 @@ gulp.task('dev',function () {
 
 gulp.task('compress-lib',function (cb) {
     pump([
-            gulp.src(liblist),
+            gulp.src(liblist_prod),
             concat('vendor.lib.js'),
             uglify(),
             rev(),
@@ -41,6 +48,11 @@ gulp.task('compress-lib',function (cb) {
         ],
         cb
     );
+});
+
+gulp.task('prepare-dist-dir',function () {
+    fse.ensureDirSync(path.join(__dirname,'dist'));
+    fse.emptyDirSync(path.join(__dirname,'dist'));
 });
 
 gulp.task('compress-router',function (cb) {
@@ -61,20 +73,32 @@ gulp.task('compress-css',function (cb) {
     ],cb);
 });
 
-gulp.task('publish-inject',function (cb){
+gulp.task('copy-other-res',function () {
+    fse.copySync(path.join(__dirname,'node_modules','materialize-css','dist','fonts'),path.join(__dirname,'dist','static','fonts'))
+});
+
+gulp.task('copy-index',function () {
     return gulp.src('./index.html')
-        .pipe(inject(gulp.src('./dist/static/js/*.lib.js', {read: false}), {starttag: '<!-- inject:head:{{ext}} -->'}))
-        .pipe(inject(gulp.src(['./dist/static/js/*.js','!./dist/static/js/*.lib.js'], {read: false})))
-        .pipe(inject(gulp.src('./dist/static/css/*.css',{read:false})))
-        .pipe(htmlmin({collapseWhitespace:true,removeComments:true}))
+        .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('publish-inject',function (){
+    return gulp.src('./dist/index.html')
+        .pipe(inject(gulp.src('./dist/static/js/*.lib.js', {read: false}), {starttag: '<!-- inject:head:{{ext}} -->',relative:true,addPrefix:url_prefix}))
+        .pipe(inject(gulp.src(['./dist/static/js/*.js','!./dist/static/js/*.lib.js'], {read: false}),{relative:true,addPrefix:url_prefix}))
+        .pipe(inject(gulp.src('./dist/static/css/*.css',{read:false}),{relative:true,addPrefix:url_prefix}))
+        // .pipe(htmlmin({collapseWhitespace:true,removeComments:true}))
         .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('publish',function(){
     runSequence(
+        'prepare-dist-dir',
         'compress-lib',
         'compress-router',
         'compress-css',
+        'copy-other-res',
+        'copy-index',
         'publish-inject'
     );
 });
