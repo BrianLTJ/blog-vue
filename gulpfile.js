@@ -58,7 +58,7 @@ gulp.task('prepare-dist-dir',function () {
 gulp.task('compress-router',function (cb) {
     pump([
             gulp.src('./static/js/router.js'),
-            // uglify(),
+            uglify(),
             rev(),
             gulp.dest('./dist/static/js/')
     ],cb);
