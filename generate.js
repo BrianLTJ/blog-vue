@@ -16,8 +16,14 @@ let metalist = [];
 
 let archivelist = [];
 
-// let mode = 'prod';
 let mode = 'test';
+
+if(process.env.ENV == 'PROD'){
+    console.log("Using production config");
+    mode = 'prod'
+}
+
+// let mode = 'test';
 /*
 * catelist
 * [ {
