@@ -34,7 +34,7 @@
                 var catepostapp = this;
                 var listurl = "/data/list/category/"+this.$route.params.key.toString();
                 $.ajax({
-                    url: listurl,
+                    url: urlAppendStamp(listurl),
                     contentType: "text/plain",
                     method: "get",
                     success: function (data) {

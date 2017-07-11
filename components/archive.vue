@@ -37,7 +37,7 @@
 
                 $.ajax({
                     method: 'get',
-                    url: '/data/list/archivelist',
+                    url: urlAppendStamp('/data/list/archivelist'),
                     contentType: 'plain/text',
                     success: function (data) {
                         archiveapp.archive_list=JSON.parse(data);

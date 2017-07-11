@@ -40,6 +40,14 @@ global.showMediumHeader=function () {
     });
 };
 
+global.urlAppendStamp=function (url) {
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let text = "";
+    for (let i = 0; i < 8; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    let tmpstmp = new Date(Date.now()).getTime();
+    return url+"?atmp="+(tmpstmp%10000).toString()+text;
+}
 
 import Index from './components/index.vue'
 import Post from './components/post.vue'

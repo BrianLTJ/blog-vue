@@ -47,7 +47,7 @@ export default {
             setpageloading();
             $.ajax({
                 method: "get",
-                url: '/data/posts/'+postapp.$route.params.url+'.meta',
+                url: urlAppendStamp('/data/posts/'+postapp.$route.params.url+'.meta'),
                 contentType: "text/plain",
                 success: function (data, status) {
                     postapp.meta = JSON.parse(data);;
@@ -62,7 +62,7 @@ export default {
             });
             $.ajax({
                 method: "get",
-                url: '/data/posts/'+postapp.$route.params.url,
+                url: urlAppendStamp('/data/posts/'+postapp.$route.params.url),
                 contentType: "text/plain",
                 success: function (data, status) {
                     postapp.post = data;

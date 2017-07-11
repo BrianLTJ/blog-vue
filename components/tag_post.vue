@@ -35,7 +35,7 @@
                 var tagpostapp = this;
                 var listurl = "/data/list/tag/"+this.$route.params.key.toString();
                 $.ajax({
-                    url: listurl,
+                    url:  urlAppendStamp(listurl),
                     contentType: "text/plain",
                     method: "get",
                     success: function (data) {

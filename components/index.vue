@@ -62,7 +62,7 @@
                 var loaded = 0;
                 $.ajax({
                     method: "get",
-                    url: '/data/list/postlist',
+                    url: urlAppendStamp('/data/list/postlist'),
                     contentType: "text/plain",
                     success: function (data,status) {
                         indexapp.post_list=JSON.parse(data);
