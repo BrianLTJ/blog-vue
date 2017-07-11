@@ -294,7 +294,7 @@ global.urlAppendStamp = function (url) {
     for (var i = 0; i < 8; i++) {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     }var tmpstmp = new Date(Date.now()).getTime();
-    return url + "?atmp=" + (tmpstmp % 10000).toString() + text;
+    return url + "?atmp=" + (tmpstmp % 1000000000).toString() + text;
 };
 
 var router = new VueRouter({
