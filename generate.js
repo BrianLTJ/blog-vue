@@ -16,8 +16,8 @@ let metalist = [];
 
 let archivelist = [];
 
-let mode = 'prod';
-
+// let mode = 'prod';
+let mode = 'test';
 /*
 * catelist
 * [ {
@@ -150,21 +150,21 @@ function saveMETA (filePath,meta) {
 }
 
 function generateArchiveList() {
-    let current_date = 0;
+
+    let monthname = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     let current_year = 0;
     let current_month = 0; // Date.getMonth(): 0~11
     let item = {};
     for(let i=0;i<metalist.length;i++){
         let thisTime = new Date(Date.parse(metalist[i]['time']));
-        if(thisTime.getMonth()!=current_month || thisTime.getFullYear()!=current_year || thisTime.getDate()!=current_date){
+        if(thisTime.getMonth()!=current_month || thisTime.getFullYear()!=current_year ){
             current_month=thisTime.getMonth();
             current_year=thisTime.getFullYear();
-            current_date=thisTime.getDate();
-            item = {"type":"label","time":current_year.toString()+"-"+(current_month+1).toString()+"-"+current_date.toString()};
-        }else{
-            item = metalist[i];
-            item['type']='post';
+            archivelist.push({"type":"label","text":monthname[current_month].toUpperCase()+' '+current_year.toString()});
         }
+        item = metalist[i];
+        item['type']='post';
+        item['time']=monthname[thisTime.getMonth()]+" "+thisTime.getDate().toString();
         archivelist.push(item);
     }
 }

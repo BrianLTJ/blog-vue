@@ -54,8 +54,8 @@
         methods: {
             indexInit () {
                 setpageloading();
-                $("#header").addClass('header-max');
-                $("#header").removeClass('header-medium header-small');
+                showMaxHeader();
+                showIndexHeader();
             },
             fetch_list () {
                 var indexapp = this;

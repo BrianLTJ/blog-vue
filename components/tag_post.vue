@@ -27,6 +27,7 @@
         methods: {
             tagpostInit () {
                 setpageloading();
+                showMaxHeader();
                 this.fetchData();
             },
             fetchData(){
@@ -41,6 +42,7 @@
                         var datajson = JSON.parse(data);
                         tagpostapp.post_list = datajson[1];
                         tagpostapp.tagname = datajson[0]['name'];
+                        setHeaderTitles("# "+tagpostapp.tagname);
                         setpageloaded();
                     },
                     error: function (err) {

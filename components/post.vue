@@ -7,9 +7,7 @@
             </div>
         </div>
         <h1 id="post-title">{{ meta.title }}</h1>
-        <div class=""></div>
         <div class="post-text" v-html="post"></div>
-
     </div>
 </template>
 
@@ -39,10 +37,7 @@ export default {
     methods: {
         postInit () {
             setpageloading();
-            $(document).ready(function () {
-                $("#header").addClass('header-medium');
-                $("#header").removeClass('header-max header-small');
-            })
+            showMediumHeader();
             this.fetchData();
 
         },
@@ -55,15 +50,14 @@ export default {
                 url: '/data/posts/'+postapp.$route.params.url+'.meta',
                 contentType: "text/plain",
                 success: function (data, status) {
-                    postapp.meta = JSON.parse(data);
-                    setpageloaded();
-
+                    postapp.meta = JSON.parse(data);;
+                    setHeaderTitles(postapp.meta.title,postapp.meta.time.toString());
                 },
                 error: function (data, status) {
                     postapp.meta=null;
                     postapp.error=status;
                     console.log(status);
-                    setpageloaded();
+                    setHeaderTitles("","");
                 }
             });
             $.ajax({

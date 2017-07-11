@@ -26,6 +26,7 @@
         methods: {
             catepostInit () {
                 setpageloading();
+                showMaxHeader();
                 this.fetchData();
             },
             fetchData(){
@@ -40,6 +41,7 @@
                         var datajson = JSON.parse(data);
                         catepostapp.post_list = datajson[1];
                         catepostapp.catename = datajson[0]['name'];
+                        setHeaderTitles("@ "+catepostapp.catename);
                         setpageloaded();
                     },
                     error: function (err) {
