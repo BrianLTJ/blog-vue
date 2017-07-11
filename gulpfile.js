@@ -69,12 +69,14 @@ gulp.task('compress-css',function (cb) {
         gulp.src(['./static/css/main.css','./node_modules/materialize-css/dist/css/materialize.min.css']),
         concat('style.css'),
         minifyCss(),
+        rev(),
         gulp.dest('./dist/static/css/')
     ],cb);
 });
 
 gulp.task('copy-other-res',function () {
-    fse.copySync(path.join(__dirname,'node_modules','materialize-css','dist','fonts'),path.join(__dirname,'dist','static','fonts'))
+    fse.copySync(path.join(__dirname,'node_modules','materialize-css','dist','fonts'),path.join(__dirname,'dist','static','fonts'));
+    fse.copySync(path.join(__dirname,'static','img'),path.join(__dirname,'dist','static','img'));
 });
 
 gulp.task('copy-index',function () {
