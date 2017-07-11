@@ -14,6 +14,8 @@ let distpath = path.join(__dirname,"data");
 let filelist = [];
 let metalist = [];
 
+let archivelist = [];
+
 let mode = 'prod';
 
 /*
@@ -147,6 +149,26 @@ function saveMETA (filePath,meta) {
     });
 }
 
+function generateArchiveList() {
+    let current_date = 0;
+    let current_year = 0;
+    let current_month = 0; // Date.getMonth(): 0~11
+    let item = {};
+    for(let i=0;i<metalist.length;i++){
+        let thisTime = new Date(Date.parse(metalist[i]['time']));
+        if(thisTime.getMonth()!=current_month || thisTime.getFullYear()!=current_year || thisTime.getDate()!=current_date){
+            current_month=thisTime.getMonth();
+            current_year=thisTime.getFullYear();
+            current_date=thisTime.getDate();
+            item = {"type":"label","time":current_year.toString()+"-"+(current_month+1).toString()+"-"+current_date.toString()};
+        }else{
+            item = metalist[i];
+            item['type']='post';
+        }
+        archivelist.push(item);
+    }
+}
+
 function savelist() {
     /*
      * Category
@@ -220,6 +242,16 @@ function savelist() {
         (err) => {
             if(err) throw err;
             console.log('Post list created.')
+        });
+
+    // Archive list
+    generateArchiveList();
+    fs.writeFile(path.join(distpath,'list','archivelist'),
+        JSON.stringify(archivelist),
+        {encoding: 'utf8'},
+        (err) => {
+            if(err) throw err;
+            console.log('Archive list created.')
         });
 }
 
