@@ -1,6 +1,7 @@
 const readline = require('readline');
 const path = require('path');
 const fs = require('fs');
+const fse = require('fs-extra');
 const datetime = require('node-datetime');
 
 const rl = readline.createInterface({
@@ -35,7 +36,8 @@ function writefile() {
         fs.writeFile(filePath,filetext,(err) => {
             if(err) throw err;
             console.log("Created: "+filePath);
-        })
+        });
+        fse.ensureDirSync(path.join(__dirname,'static','img','url'));
     }else{
         console.log("\nQuit without changing anything.");
     }
@@ -52,7 +54,7 @@ rl.question('Title: ', (answer) => {
             url = answer.replace(spacereg,"-").toLowerCase();
 
             filePath = path.join(__dirname,"posts","publish",url+".md");
-            let nowtime = datetime.create()
+            let nowtime = datetime.create();
             filetext = "title: "+title+"\n"+
                 "author: "+author+"\n"+
                     "url: "+url+"\n"+
