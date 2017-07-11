@@ -5,7 +5,8 @@ html,body { margin: 0; padding:0; height: 100%; }
     height: 5px;
     background-color: transparent;
     position: fixed;
-    top: -5px;
+    opacity: 0;
+    /*top: 0;*/
     left: 0;
     z-index: 100;
     overflow: hidden;
@@ -25,7 +26,7 @@ html,body { margin: 0; padding:0; height: 100%; }
 }
 
 .loading-bar-show {
-    top: 0;
+    opacity: 1 !important;
 }
 .loading-bar-show span {
     -webkit-animation:top-loading-bar-loading 1s ease-in infinite;
@@ -52,6 +53,24 @@ header {
     position: absolute;
     width: 100%;
     background-color: rgba(255,255,255,0);
+    box-sizing: content-box;
+    z-index: 50;
+}
+
+.header-container {
+    /*margin-top: 50px;*/
+}
+#header-index {
+    position: relative;
+    height: 100%;
+}
+
+#header-index .index-header-title {
+    position: absolute;
+    top: 50%;
+    font-size: 5em;
+    text-align: center;
+    color: #FFFFFF;
 }
 
 footer {
