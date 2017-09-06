@@ -1,48 +1,19 @@
 {
   "name": "blog-vue",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A Static blog with Vue",
+  "private": true,
   "scripts": {
-    "build": "",
-    "watch": ""
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "author": "Tingjun Li",
   "license": "MIT",
   "dependencies": {
     "fs-extra": "^3.0.1",
-    "jquery": "^3.2.1",
     "marked": "^0.3.6",
-    "material-design-icons": "^3.0.1",
-    "materialize-css": "^0.99.0",
     "node-datetime": "^1.0.1",
     "rimraf": "^2.6.1",
-    "vue": "^2.3.4",
-    "vue-router": "^2.7.0",
     "yamljs": "^0.3.0"
-  },
-  "devDependencies": {
-    "babel-core": "^6.25.0",
-    "babel-loader": "^7.1.1",
-    "babel-preset-env": "^1.5.2",
-    "babel-preset-latest": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "cross-env": "^5.0.1",
-    "css-loader": "^0.28.4",
-    "extract-text-webpack-plugin": "^2.1.2",
-    "file-loader": "^0.11.2",
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-htmlmin": "^3.0.0",
-    "gulp-inject": "^4.2.0",
-    "gulp-minify-css": "^1.2.4",
-    "gulp-rev": "^7.1.2",
-    "gulp-sourcemaps": "^2.6.0",
-    "gulp-uglify": "^3.0.0",
-    "pump": "^1.0.2",
-    "run-sequence": "^2.0.0",
-    "vue-loader": "^13.0.0",
-    "vue-template-compiler": "^2.3.4",
-    "webpack": "^3.0.0"
   }
 }
