@@ -1,64 +1,17 @@
-<!doctype html>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <!-- inject:head:js -->
-    <script src="/static/js/lib.js"></script>
-    <!-- endinject -->
-
-    <!-- inject:css -->
-    <link rel="stylesheet" href="/node_modules/materialize-css/dist/css/materialize.min.css">
-    <link rel="stylesheet" href="/static/css/main.css">
-    <!-- endinject -->
-
-    <title>LTJ's BLOG</title>
+	<title>blog</title>
+	<script type="text/javascript" src="static/js/main.js"></script>
 </head>
 <body>
-<div id="loading-bar"><span id="loading-bar-item"></span></div>
-<div class="wrapper" id="app">
-    <header>
-        <div class="row nav-container">
-            <div class="logo col s12 m4">LTJ's BLOG</div>
-            <div class="nav col s12 m8">
-                <router-link class="nav-link" to="/">HOME<span class="underline"></span></router-link>
-                <router-link class="nav-link" to="/post">POST<span class="underline"></span></router-link>
-                <router-link class="nav-link" to="/about">ABOUT<span class="underline"></span></router-link>
-            </div>
-        </div>
 
-    </header>
-
-    <div id="header" class="header header-max">
-        <div class="header-container" id="header-index">
-            <div class="index-header-title">
-                <strong>LTJ's BLOG</strong>
-            </div>
-        </div>
-        <div class="header-container header-hidden row" id="header-normal-page">
-            <div class="title-container col s12 m10 offset-m1">
-                <div class="main-title" id="header-main-title"></div>
-                <div class="sub-title" id="header-sub-title"></div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <transition name="fade">
-            <router-view></router-view>
-        </transition>
-    </div>
-
-    <footer>
-        <p>GITHUB MAIL</p>
-        <p>Code by LiTingjun</p>
-    </footer>
+<div id="app">
+	<div class="test">
+		Halo
+	</div>
 </div>
-<!-- inject:js -->
-<script src="/static/js/router.js"></script>
-<!-- endinject -->
+
 
 </body>
 </html>
